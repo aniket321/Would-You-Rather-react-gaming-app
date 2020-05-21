@@ -2,12 +2,20 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Menu, Container, Divider } from 'semantic-ui-react'
 import { setAuthedUser } from '../actions/authedUser';
-import { NavLink } from 'react-router-dom';
+import { NavLink, withRouter } from 'react-router-dom';
 
 class NavBar extends Component {
-    state = { activeItem: 'Home' }
 
-    handleItemClick = (e, { name }) => this.setState({ activeItem: name })
+    constructor(props) {
+        super(props)
+        this.state = {
+            activeItem: props.location.pathname.substr(1) === 'add' ? 'new question' : props.location.pathname.substr(1) || 'home'
+        }
+    }
+
+    handleItemClick = (e, { name }) => {
+        this.setState({ activeItem: name })
+    }
 
     /**
     * @description function to handle logout
@@ -28,28 +36,28 @@ class NavBar extends Component {
             <Container>
                 <Menu secondary>
                     <Menu.Item
-                        name='Home'
+                        name='home'
                         as={NavLink}
                         to="/" exact
-                        active={activeItem === 'Home'}
+                        active={activeItem === 'home'}
                         onClick={this.handleItemClick}
-                        style={activeItem === 'Home' ? { backgroundColor: "#1E90FF", color: "white" } : { backgroundColor: "white", color: "black" }}
+                        style={activeItem === 'home' ? { backgroundColor: "#1E90FF", color: "white" } : { backgroundColor: "white", color: "black" }}
                     />
                     <Menu.Item
-                        name='New Question'
+                        name='new question'
                         as={NavLink}
                         to="/add"
-                        active={activeItem === 'New Question'}
+                        active={activeItem === 'new question'}
                         onClick={this.handleItemClick}
-                        style={activeItem === 'New Question' ? { backgroundColor: "#1E90FF", color: "white" } : { backgroundColor: "white", color: "black" }}
+                        style={activeItem === 'new question' ? { backgroundColor: "#1E90FF", color: "white" } : { backgroundColor: "white", color: "black" }}
                     />
                     <Menu.Item
-                        name='LeaderBoard'
+                        name='leaderboard'
                         as={NavLink}
                         to="/leaderboard"
-                        active={activeItem === 'LeaderBoard'}
+                        active={activeItem === 'leaderboard'}
                         onClick={this.handleItemClick}
-                        style={activeItem === 'LeaderBoard' ? { backgroundColor: "#1E90FF", color: "white" } : { backgroundColor: "white", color: "black" }}
+                        style={activeItem === 'leaderboard' ? { backgroundColor: "#1E90FF", color: "white" } : { backgroundColor: "white", color: "black" }}
                     />
                     <Menu.Menu position='right'>
                         <Menu.Item>
@@ -78,4 +86,4 @@ function mapStateToProps({ users, authedUser }) {
     };
 }
 
-export default connect(mapStateToProps, { setAuthedUser })(NavBar);
+export default withRouter(connect(mapStateToProps, { setAuthedUser })(NavBar));
