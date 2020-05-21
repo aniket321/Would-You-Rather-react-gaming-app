@@ -10,7 +10,7 @@ class LeaderBoard extends Component {
         return (
             <Grid columns={1} centered>
                 <Grid.Row>
-                    <Grid.Column style={{ width: 500 }}>
+                    <Grid.Column style={{ width: 800 }}>
                         <Segment>
                             {users.map((user) => (
                                 <Segment key={user.id}>
