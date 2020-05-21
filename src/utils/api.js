@@ -1,7 +1,9 @@
 import {
     _getUsers,
     _getQuestions,
-} from './_DATA.js'
+    _saveQuestionAnswer,
+    _saveQuestion
+} from './_DATA'
 
 export function getInitialData() {
     return Promise.all([
@@ -13,3 +15,10 @@ export function getInitialData() {
     }))
 }
 
+export function saveAnswerToQuestion(authedUser, qid, answer) {
+    return _saveQuestionAnswer({ authedUser, qid, answer });
+}
+
+export function addQuestion(question) {
+    return _saveQuestion(question);
+}

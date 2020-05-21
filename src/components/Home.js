@@ -1,21 +1,89 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
+import { Tab, Header, Grid } from 'semantic-ui-react'
+import Card from './Card'
 
 class Home extends Component {
 
+    getAnsweredList = (authedUser, users, questions) => {
+        return Object.keys(users[authedUser]['answers']).sort((a, b) => questions[b].timestamp - questions[a].timestamp);
+    }
+
+    getUnansweredList = (questionsList, answeredList) => {
+        return questionsList.filter((question) => !answeredList.includes(question) ? true : false);
+    }
+
+    panes = (answeredList, unansweredList, questions, users, authedUser) => {
+        return [
+            {
+                menuItem: 'Unanswered',
+                render: () => {
+                    if (unansweredList.length === 0) {
+                        return (
+                            <Header as="h1" textAlign="center">You have answered all the questions</Header>
+                        )
+                    }
+
+                    return (
+                        <Tab.Pane>
+                            {unansweredList.map(question => (
+                                <Card
+                                    key={questions[question].id}
+                                    id={question}
+                                    questions={questions}
+                                    users={users}
+                                    authedUser={authedUser}
+                                    answered="true"
+                                />
+                            ))}
+                        </Tab.Pane>
+                    )
+                }
+
+            },
+            {
+                menuItem: 'Answered',
+                render: () => (
+                    <Tab.Pane>
+                        {answeredList.map(question => (
+                            <Card
+                                key={questions[question].id}
+                                id={question}
+                                questions={questions}
+                                users={users}
+                                authedUser={authedUser}
+                                answered="false"
+                            />
+                        ))}
+                    </Tab.Pane>
+                )
+            }
+        ];
+
+    }
+
     render() {
-        const { authedUser } = this.props
+        const { authedUser, users, questions } = this.props
+        let sortedQuestions = Object.keys(questions).sort((a, b) => questions[b].timestamp - questions[a].timestamp)
+        const answeredList = this.getAnsweredList(authedUser, users, questions)
+        const unansweredList = this.getUnansweredList(sortedQuestions, answeredList)
         return (
-            <div>
-                Logged in user is {authedUser}
-            </div>
+            <Grid columns={1} centered>
+                <Grid.Row>
+                    <Grid.Column style={{ width: 800 }}>
+                        <Tab menu={{ pointing: true }} panes={this.panes(answeredList, unansweredList, questions, users, authedUser)} />
+                    </Grid.Column>
+                </Grid.Row>
+            </Grid >
         )
     }
 }
 
-function mapStateToProps({ authedUser }) {
+function mapStateToProps({ authedUser, users, questions }) {
     return {
-        authedUser
+        authedUser,
+        users,
+        questions
     }
 }
 
