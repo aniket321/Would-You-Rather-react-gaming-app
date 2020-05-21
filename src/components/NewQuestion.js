@@ -5,19 +5,38 @@ import { handleAddNewQuestion } from '../actions/questions'
 import { Redirect } from 'react-router-dom'
 
 class NewQuestion extends Component {
+
+    /**
+    * state to record the value of options entered by the user
+    */
     state = {
         optionOne: '',
         optionTwo: '',
         toHome: false
     }
 
+    /**
+    * @description function to change the state of optionOne
+    * @param {object} e
+    */
+
     handleChangeForOptionOne = (e) => {
         this.setState({ optionOne: e.target.value })
     }
 
+    /**
+    * @description function to change the state of optionTwo
+    * @param {object} e
+    */
+
     handleChangeForOptionTwo = (e) => {
         this.setState({ optionTwo: e.target.value })
     }
+
+    /**
+    * @description function to dispatch action to store new question to the state
+    * @param {object} e
+    */
 
     handleSubmit = (e) => {
         e.preventDefault();

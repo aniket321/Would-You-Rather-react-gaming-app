@@ -7,13 +7,27 @@ import { Redirect } from 'react-router-dom'
 
 class QuestionContent extends Component {
 
+    /**
+    * state to record selected option by the user
+    */
     state = {
         selected: null
     };
 
+    /**
+    * @description function to change the state of selected option
+    * @param {object} e
+    * @param {string} value
+    */
+
     handleChange = (e, { value }) => {
         this.setState({ selected: value })
     };
+
+    /**
+    * @description function to dispatch the selected answer by the user for a particular question
+    * @param {object} e
+    */
 
     handleSubmit = (e) => {
         e.preventDefault();

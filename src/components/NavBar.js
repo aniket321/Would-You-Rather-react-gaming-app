@@ -9,6 +9,11 @@ class NavBar extends Component {
 
     handleItemClick = (e, { name }) => this.setState({ activeItem: name })
 
+    /**
+    * @description function to handle logout
+    * @param {object} questionsList
+    */
+
     handleClick = (e) => {
         e.preventDefault();
         this.props.setAuthedUser(null);

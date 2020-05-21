@@ -5,9 +5,22 @@ import Card from './Card'
 
 class Home extends Component {
 
+    /**
+    * @description function to get answered question list
+    * @param {string} authedUser
+    * @param {object} users  
+    * @param {object} questions 
+    */
+
     getAnsweredList = (authedUser, users, questions) => {
         return Object.keys(users[authedUser]['answers']).sort((a, b) => questions[b].timestamp - questions[a].timestamp);
     }
+
+    /**
+    * @description function to get unanswered question list
+    * @param {array} questionsList
+    * @param {array} answeredList 
+    */
 
     getUnansweredList = (questionsList, answeredList) => {
         return questionsList.filter((question) => !answeredList.includes(question) ? true : false);

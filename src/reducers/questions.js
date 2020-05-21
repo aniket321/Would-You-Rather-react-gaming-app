@@ -4,6 +4,10 @@ import {
     ADD_NEW_QUESTION
 } from '../actions/questions'
 
+/**
+* @description reducer for questions
+*/
+
 export default function questions(state = {}, action) {
     switch (action.type) {
         case RECEIVE_QUESTIONS:

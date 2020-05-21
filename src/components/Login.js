@@ -5,19 +5,37 @@ import { Segment, Header, Form } from 'semantic-ui-react'
 
 class Login extends Component {
 
+    /**
+    * state to store the selected user name in the dropdown list
+    */
     state = {
         user: null
     }
 
+    /**
+    * @description function to set the state with selected user name from the dropdown list
+    * @param {object} e
+    * @param {string} value 
+    */
+
     userOnChange = (e, { value }) => {
         this.setState({ user: value })
     }
+
+    /**
+    * @description function to dispatch the authenticated user and change the state in the store
+    * @param {object} e
+    */
 
     handleOnSubmit = e => {
         e.preventDefault();
         console.log(this.state.user)
         this.props.dispatch(setAuthedUser(this.state.user))
     }
+
+    /**
+    * @description function to get create users object for the dropdown list options
+    */
 
     getUsers = () => {
         const { users } = this.props;
